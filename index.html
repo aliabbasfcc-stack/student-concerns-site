@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Student Concerns</title>
+<style>
+  :root {
+    --bg: #f6f7f9;
+    --card: #ffffff;
+    --text: #1f2430;
+    --muted: #5b6472;
+    --accent: #2f6fed;
+    --border: #e1e4e9;
+    --notice-bg: #fff4e5;
+    --notice-border: #f0b429;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    display: flex;
+    justify-content: center;
+    padding: 32px 16px;
+  }
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    max-width: 560px;
+    width: 100%;
+    padding: 28px;
+  }
+  h1 {
+    font-size: 1.4rem;
+    margin: 0 0 6px;
+  }
+  p.sub {
+    color: var(--muted);
+    margin: 0 0 20px;
+    font-size: 0.95rem;
+  }
+  .notice {
+    background: var(--notice-bg);
+    border: 1px solid var(--notice-border);
+    border-radius: 8px;
+    padding: 14px 16px;
+    font-size: 0.88rem;
+    line-height: 1.5;
+    margin-bottom: 22px;
+  }
+  .notice strong { display: block; margin-bottom: 4px; }
+  label {
+    display: block;
+    font-weight: 600;
+    font-size: 0.9rem;
+    margin: 16px 0 6px;
+  }
+  select, textarea {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-family: inherit;
+    background: #fff;
+    color: var(--text);
+  }
+  textarea {
+    min-height: 140px;
+    resize: vertical;
+  }
+  button {
+    margin-top: 20px;
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    background: var(--accent);
+    color: #fff;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+  .status {
+    margin-top: 14px;
+    font-size: 0.9rem;
+    text-align: center;
+    min-height: 1.2em;
+  }
+  .status.ok { color: #1a8754; }
+  .status.err { color: #d33; }
+</style>
+</head>
+<body>
+  <div class="card">
+    <h1>Share a Concern</h1>
+    <p class="sub">This form does not ask for your name, and we don't collect it.</p>
+
+    <div class="notice">
+      <strong>Please read before submitting</strong>
+      This is for general concerns and feedback. If you or someone else is in
+      immediate danger, or you're thinking about harming yourself, please talk
+      to a teacher, counsellor, or call a helpline right away — don't wait for
+      a reply here. Reports that mention risk of serious harm will be shared
+      with the school's safeguarding lead so they can help.
+      <br /><br />
+      <strong>Helpline: [ADD LOCAL NUMBER HERE]</strong>
+    </div>
+
+    <form id="concernForm">
+      <label for="category">Category</label>
+      <select id="category" name="category">
+        <option value="General">General feedback</option>
+        <option value="Bullying">Bullying / peer conflict</option>
+        <option value="Academic">Academic pressure</option>
+        <option value="Wellbeing">Personal wellbeing</option>
+        <option value="Other">Other</option>
+      </select>
+
+      <label for="message">Your concern</label>
+      <textarea
+        id="message"
+        name="message"
+        placeholder="Write as much or as little as you like..."
+        required
+      ></textarea>
+
+      <button type="submit" id="submitBtn">Submit</button>
+      <div class="status" id="status"></div>
+    </form>
+  </div>
+
+  <script>
+    // Paste the URL you got from Deploy -> New deployment in Apps Script
+    // (it ends in /exec) between the quotes below.
+    const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyk02qI-4II5ETBOBQAm7WDnFcLUw2B29Sf7q9WYcFagFw2fEfSNlMgrCfwc8cF26xVAQ/exec";
+
+    const form = document.getElementById("concernForm");
+    const statusEl = document.getElementById("status");
+    const submitBtn = document.getElementById("submitBtn");
+
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+
+      const category = document.getElementById("category").value;
+      const message = document.getElementById("message").value.trim();
+
+      if (!message) return;
+
+      submitBtn.disabled = true;
+      statusEl.textContent = "Submitting...";
+      statusEl.className = "status";
+
+      try {
+        // Apps Script Web Apps don't send normal CORS headers back, so the
+        // response usually can't be read from the browser. We send the
+        // request and just assume success if fetch itself didn't throw —
+        // that's fine here since we're not displaying any returned data.
+        await fetch(APPS_SCRIPT_URL, {
+          method: "POST",
+          body: new URLSearchParams({ category, message }),
+        });
+
+        form.reset();
+        statusEl.textContent = "Thank you. Your concern has been submitted.";
+        statusEl.className = "status ok";
+      } catch (err) {
+        statusEl.textContent =
+          "Something went wrong. Please try again in a moment.";
+        statusEl.className = "status err";
+      } finally {
+        submitBtn.disabled = false;
+      }
+    });
+  </script>
+</body>
+</html>
