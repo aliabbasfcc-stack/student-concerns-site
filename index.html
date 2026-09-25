@@ -3,181 +3,610 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Student Concerns</title>
+<title>Student Wellbeing Portal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,500;8..60,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #f6f7f9;
-    --card: #ffffff;
-    --text: #1f2430;
-    --muted: #5b6472;
-    --accent: #2f6fed;
-    --border: #e1e4e9;
-    --notice-bg: #fff4e5;
-    --notice-border: #f0b429;
+    --paper: #f6f8f7;
+    --panel: #ffffff;
+    --ink: #1a2624;
+    --ink-soft: #53645f;
+    --ink-faint: #8a9a95;
+    --line: #dfe6e2;
+    --pine: #1f463f;
+    --pine-deep: #12312c;
+    --pine-tint: #eaf1ee;
+    --amber-bg: #fbf5e7;
+    --amber-line: #e6cf8e;
+    --amber-ink: #6b5518;
+    --err: #a8402a;
+    --serif: "Source Serif 4", Georgia, serif;
+    --sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   }
   * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
   body {
-    margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
-    background: var(--bg);
-    color: var(--text);
+    font-family: var(--sans);
+    color: var(--ink);
+    background: var(--paper);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ---------- header ---------- */
+  header {
+    border-bottom: 1px solid var(--line);
+    background: var(--panel);
+  }
+  .header-inner {
+    max-width: 1040px;
+    margin: 0 auto;
+    padding: 20px 28px;
     display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .crest {
+    width: 38px;
+    height: 38px;
+    border-radius: 9px;
+    background: var(--pine);
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
     justify-content: center;
-    padding: 32px 16px;
   }
-  .card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    max-width: 560px;
-    width: 100%;
-    padding: 28px;
-  }
-  h1 {
-    font-size: 1.4rem;
-    margin: 0 0 6px;
-  }
-  p.sub {
-    color: var(--muted);
-    margin: 0 0 20px;
-    font-size: 0.95rem;
-  }
-  .notice {
-    background: var(--notice-bg);
-    border: 1px solid var(--notice-border);
-    border-radius: 8px;
-    padding: 14px 16px;
-    font-size: 0.88rem;
-    line-height: 1.5;
-    margin-bottom: 22px;
-  }
-  .notice strong { display: block; margin-bottom: 4px; }
-  label {
-    display: block;
+  .crest svg { width: 20px; height: 20px; }
+  .header-text .school {
+    font-size: 0.98rem;
     font-weight: 600;
-    font-size: 0.9rem;
-    margin: 16px 0 6px;
+    color: var(--ink);
+    line-height: 1.2;
   }
+  .header-text .portal {
+    font-size: 0.84rem;
+    color: var(--ink-soft);
+  }
+
+  /* ---------- layout ---------- */
+  main {
+    max-width: 1040px;
+    margin: 0 auto;
+    padding: 56px 28px 80px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+    align-items: start;
+  }
+
+  .intro {
+    padding-top: 6px;
+    opacity: 0;
+    transform: translateY(10px);
+    animation: rise 0.6s cubic-bezier(0.16,1,0.3,1) forwards;
+  }
+  .intro h1 {
+    font-family: var(--serif);
+    font-weight: 600;
+    font-size: 2.15rem;
+    line-height: 1.18;
+    letter-spacing: -0.01em;
+    color: var(--pine-deep);
+    margin: 0 0 18px;
+  }
+  .intro p.lede {
+    font-size: 1rem;
+    line-height: 1.65;
+    color: var(--ink-soft);
+    margin: 0 0 34px;
+    max-width: 42ch;
+  }
+
+  .process { margin-bottom: 34px; }
+  .process-title {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--ink-faint);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 16px;
+  }
+  .step {
+    display: flex;
+    gap: 14px;
+    padding: 14px 0;
+    border-top: 1px solid var(--line);
+  }
+  .step:last-child { border-bottom: 1px solid var(--line); }
+  .step-num {
+    font-family: var(--serif);
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: var(--pine);
+    width: 20px;
+    flex-shrink: 0;
+    padding-top: 1px;
+  }
+  .step-body h3 {
+    font-size: 0.92rem;
+    font-weight: 600;
+    margin: 0 0 3px;
+    color: var(--ink);
+  }
+  .step-body p {
+    font-size: 0.87rem;
+    line-height: 1.5;
+    color: var(--ink-soft);
+    margin: 0;
+  }
+
+  .notice {
+    background: var(--amber-bg);
+    border: 1px solid var(--amber-line);
+    border-radius: 10px;
+    padding: 16px 18px;
+    font-size: 0.87rem;
+    line-height: 1.55;
+    color: var(--amber-ink);
+  }
+  .notice .line1 { color: var(--ink); display: block; margin-bottom: 8px; }
+  .notice .helpline { display: block; margin-top: 10px; font-weight: 600; }
+
+  /* ---------- form panel ---------- */
+  .panel {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 32px 32px 28px;
+    box-shadow: 0 1px 2px rgba(18,49,44,0.04), 0 16px 36px -26px rgba(18,49,44,0.4);
+    opacity: 0;
+    transform: translateY(10px);
+    animation: rise 0.6s cubic-bezier(0.16,1,0.3,1) forwards;
+    animation-delay: 0.1s;
+  }
+  @keyframes rise { to { opacity: 1; transform: translateY(0); } }
+
+  .panel-label {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--pine);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 8px;
+  }
+  .panel h2 {
+    font-family: var(--serif);
+    font-weight: 600;
+    font-size: 1.4rem;
+    margin: 0 0 22px;
+    color: var(--pine-deep);
+  }
+
+  label { display: block; font-size: 0.85rem; font-weight: 600; color: var(--ink); margin: 0 0 8px; }
+  .field + .field { margin-top: 20px; }
   select, textarea {
     width: 100%;
+    font-family: var(--sans);
+    font-size: 0.96rem;
+    color: var(--ink);
+    background: var(--paper);
+    border: 1.5px solid var(--line);
+    border-radius: 10px;
+    padding: 12px 13px;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+  }
+  textarea { min-height: 148px; line-height: 1.5; resize: vertical; }
+  textarea:hover { border-color: #c7d3cd; }
+  textarea:focus {
+    outline: none;
+    border-color: var(--pine);
+    background: #fff;
+    box-shadow: 0 0 0 4px rgba(31,70,63,0.09);
+  }
+
+  /* ---------- custom dropdown ---------- */
+  .combo {
+    position: relative;
+    user-select: none;
+  }
+  .combo-trigger {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    font-family: var(--sans);
+    font-size: 0.96rem;
+    color: var(--ink);
+    background: var(--paper);
+    border: 1.5px solid var(--line);
+    border-radius: 10px;
+    padding: 12px 13px;
+    cursor: pointer;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+  }
+  .combo-trigger:hover { border-color: #c7d3cd; }
+  .combo.open .combo-trigger,
+  .combo-trigger:focus-visible {
+    outline: none;
+    border-color: var(--pine);
+    background: #fff;
+    box-shadow: 0 0 0 4px rgba(31,70,63,0.09);
+  }
+  .combo-chevron {
+    width: 10px;
+    height: 10px;
+    flex-shrink: 0;
+    transition: transform 0.3s cubic-bezier(0.16,1,0.3,1);
+  }
+  .combo.open .combo-chevron { transform: rotate(180deg); }
+
+  .combo-panel {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: calc(100% + 8px);
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(18,49,44,0.05), 0 22px 40px -18px rgba(18,49,44,0.28);
+    padding: 6px;
+    z-index: 20;
+    transform-origin: top center;
+    opacity: 0;
+    transform: translateY(-6px) scale(0.98);
+    pointer-events: none;
+    transition: opacity 0.18s ease, transform 0.22s cubic-bezier(0.16,1,0.3,1);
+  }
+  .combo.open .combo-panel {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    pointer-events: auto;
+  }
+  .combo-option {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
     padding: 10px 12px;
-    border: 1px solid var(--border);
     border-radius: 8px;
     font-size: 0.95rem;
-    font-family: inherit;
-    background: #fff;
-    color: var(--text);
+    color: var(--ink);
+    cursor: pointer;
+    transition: background 0.12s ease, color 0.12s ease;
   }
-  textarea {
-    min-height: 140px;
-    resize: vertical;
+  .combo-option:hover,
+  .combo-option.active { background: var(--pine-tint); }
+  .combo-option.selected { color: var(--pine-deep); font-weight: 600; }
+  .combo-option .tick {
+    width: 14px;
+    height: 14px;
+    opacity: 0;
+    transform: scale(0.6);
+    transition: opacity 0.15s ease, transform 0.15s ease;
+    flex-shrink: 0;
   }
-  button {
-    margin-top: 20px;
+  .combo-option.selected .tick { opacity: 1; transform: scale(1); }
+
+  .submit {
+    margin-top: 24px;
     width: 100%;
-    padding: 12px;
+    padding: 13px;
     border: none;
-    border-radius: 8px;
-    background: var(--accent);
+    border-radius: 10px;
+    background: var(--pine);
     color: #fff;
-    font-size: 1rem;
+    font-family: var(--sans);
+    font-size: 0.98rem;
     font-weight: 600;
     cursor: pointer;
+    transition: transform 0.15s ease, background 0.2s ease;
   }
-  button:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
+  .submit:hover { background: var(--pine-deep); }
+  .submit:active { transform: scale(0.98); }
+  .submit:disabled { opacity: 0.65; cursor: not-allowed; transform: none; }
+
+  .err-text { margin-top: 12px; font-size: 0.86rem; color: var(--err); text-align: center; min-height: 1.1em; }
+
+  .success { display: none; text-align: center; padding: 20px 4px 6px; }
+  .success.show { display: block; }
+  .check { width: 52px; height: 52px; margin: 0 auto 16px; }
+  .check circle {
+    fill: none; stroke: var(--pine); stroke-width: 2;
+    stroke-dasharray: 166; stroke-dashoffset: 166;
+    animation: draw-circle 0.55s cubic-bezier(0.65,0,0.35,1) forwards;
   }
-  .status {
-    margin-top: 14px;
-    font-size: 0.9rem;
+  .check path {
+    fill: none; stroke: var(--pine); stroke-width: 2.5;
+    stroke-linecap: round; stroke-linejoin: round;
+    stroke-dasharray: 48; stroke-dashoffset: 48;
+    animation: draw-check 0.35s ease forwards 0.5s;
+  }
+  @keyframes draw-circle { to { stroke-dashoffset: 0; } }
+  @keyframes draw-check { to { stroke-dashoffset: 0; } }
+  .success h3 { font-family: var(--serif); font-weight: 600; font-size: 1.25rem; margin: 0 0 8px; color: var(--pine-deep); }
+  .success p { font-size: 0.9rem; color: var(--ink-soft); margin: 0 0 20px; line-height: 1.5; }
+  .again {
+    background: none; border: 1.5px solid var(--line); color: var(--ink-soft);
+    font-family: var(--sans); font-size: 0.88rem; font-weight: 600;
+    padding: 10px 18px; border-radius: 9px; cursor: pointer;
+    transition: border-color 0.2s ease, color 0.2s ease;
+  }
+  .again:hover { border-color: var(--pine); color: var(--pine); }
+
+  footer {
+    border-top: 1px solid var(--line);
+    padding: 22px 28px;
     text-align: center;
-    min-height: 1.2em;
+    font-size: 0.8rem;
+    color: var(--ink-faint);
   }
-  .status.ok { color: #1a8754; }
-  .status.err { color: #d33; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .intro, .panel, .check circle, .check path {
+      animation: none !important; opacity: 1 !important; transform: none !important; stroke-dashoffset: 0 !important;
+    }
+  }
+
+  @media (max-width: 860px) {
+    main { grid-template-columns: 1fr; gap: 40px; padding: 40px 22px 64px; }
+    .panel { padding: 28px 24px 24px; }
+    .intro h1 { font-size: 1.8rem; }
+  }
 </style>
 </head>
 <body>
-  <div class="card">
-    <h1>Share a Concern</h1>
-    <p class="sub">This form does not ask for your name, and we don't collect it.</p>
+  <header>
+    <div class="header-inner">
+      <div class="crest">
+        <svg viewBox="0 0 24 24" fill="none">
+          <path d="M12 3L20 7V12C20 16.5 16.5 20 12 21.5C7.5 20 4 16.5 4 12V7L12 3Z" stroke="#ffffff" stroke-width="1.6" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div class="header-text">
+        <div class="school">[School Name]</div>
+        <div class="portal">Student Wellbeing Portal</div>
+      </div>
+    </div>
+  </header>
 
-    <div class="notice">
-      <strong>Please read before submitting</strong>
-      This is for general concerns and feedback. If you or someone else is in
-      immediate danger, or you're thinking about harming yourself, please talk
-      to a teacher, counsellor, or call a helpline right away — don't wait for
-      a reply here. Reports that mention risk of serious harm will be shared
-      with the school's safeguarding lead so they can help.
-      <br /><br />
-      <strong>Helpline: [ADD LOCAL NUMBER HERE]</strong>
+  <main>
+    <div class="intro">
+      <h1>Raise a concern, in confidence</h1>
+      <p class="lede">
+        This portal lets students share concerns without giving their name.
+        Every submission is read by a member of the pastoral team.
+      </p>
+
+      <div class="process">
+        <div class="process-title">How it works</div>
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <h3>You submit</h3>
+            <p>No login, no name. Write as little or as much detail as you're comfortable with.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <h3>It's reviewed</h3>
+            <p>The pastoral team checks new submissions regularly, typically within a few school days.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-body">
+            <h3>Urgent items are escalated sooner</h3>
+            <p>Submissions indicating risk of serious harm are flagged for same-day attention.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="notice">
+        <span class="line1">
+          If you or someone else is in immediate danger, or you're thinking
+          about harming yourself, please talk to a teacher or counsellor, or
+          call a helpline right away — don't wait for a reply here.
+        </span>
+        Reports that mention risk of serious harm will be shared with the
+        school's safeguarding lead so they can help.
+        <span class="helpline">Helpline: [ADD LOCAL NUMBER HERE]</span>
+      </div>
     </div>
 
-    <form id="concernForm">
-      <label for="category">Category</label>
-      <select id="category" name="category">
-        <option value="General">General feedback</option>
-        <option value="Bullying">Bullying / peer conflict</option>
-        <option value="Academic">Academic pressure</option>
-        <option value="Wellbeing">Personal wellbeing</option>
-        <option value="Other">Other</option>
-      </select>
+    <div class="panel">
+      <div id="formView">
+        <div class="panel-label">Submit a concern</div>
+        <h2>Tell us what's going on</h2>
 
-      <label for="message">Your concern</label>
-      <textarea
-        id="message"
-        name="message"
-        placeholder="Write as much or as little as you like..."
-        required
-      ></textarea>
+        <form id="concernForm">
+          <div class="field">
+            <label id="categoryLabel" for="categoryTrigger">Category</label>
+            <div class="combo" id="categoryCombo">
+              <button
+                type="button"
+                class="combo-trigger"
+                id="categoryTrigger"
+                aria-haspopup="listbox"
+                aria-expanded="false"
+                aria-labelledby="categoryLabel categoryTrigger"
+              >
+                <span id="categoryTriggerText">General feedback</span>
+                <svg class="combo-chevron" viewBox="0 0 14 9" fill="none">
+                  <path d="M1 1L7 7L13 1" stroke="#53645F" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+              <div class="combo-panel" id="categoryPanel" role="listbox" aria-labelledby="categoryLabel" tabindex="-1">
+                <div class="combo-option selected" role="option" aria-selected="true" data-value="General">
+                  <span>General feedback</span>
+                  <svg class="tick" viewBox="0 0 14 11" fill="none"><path d="M1 5.5L5 9.5L13 1" stroke="#1f463f" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+                <div class="combo-option" role="option" aria-selected="false" data-value="Bullying">
+                  <span>Bullying / peer conflict</span>
+                  <svg class="tick" viewBox="0 0 14 11" fill="none"><path d="M1 5.5L5 9.5L13 1" stroke="#1f463f" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+                <div class="combo-option" role="option" aria-selected="false" data-value="Academic">
+                  <span>Academic pressure</span>
+                  <svg class="tick" viewBox="0 0 14 11" fill="none"><path d="M1 5.5L5 9.5L13 1" stroke="#1f463f" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+                <div class="combo-option" role="option" aria-selected="false" data-value="Wellbeing">
+                  <span>Personal wellbeing</span>
+                  <svg class="tick" viewBox="0 0 14 11" fill="none"><path d="M1 5.5L5 9.5L13 1" stroke="#1f463f" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+                <div class="combo-option" role="option" aria-selected="false" data-value="Other">
+                  <span>Other</span>
+                  <svg class="tick" viewBox="0 0 14 11" fill="none"><path d="M1 5.5L5 9.5L13 1" stroke="#1f463f" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+              </div>
+              <!-- kept in sync with the panel above; this is what actually submits -->
+              <select id="category" name="category" style="position:absolute; width:1px; height:1px; opacity:0; pointer-events:none;" tabindex="-1" aria-hidden="true">
+                <option value="General">General feedback</option>
+                <option value="Bullying">Bullying / peer conflict</option>
+                <option value="Academic">Academic pressure</option>
+                <option value="Wellbeing">Personal wellbeing</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+          </div>
+          <div class="field">
+            <label for="message">Details</label>
+            <textarea id="message" name="message" placeholder="Write as much or as little as you like..." required></textarea>
+          </div>
+          <button type="submit" class="submit" id="submitBtn">Submit</button>
+          <div class="err-text" id="errText"></div>
+        </form>
+      </div>
 
-      <button type="submit" id="submitBtn">Submit</button>
-      <div class="status" id="status"></div>
-    </form>
-  </div>
+      <div class="success" id="successView">
+        <svg class="check" viewBox="0 0 60 60">
+          <circle cx="30" cy="30" r="26" />
+          <path d="M18 31.5L26 39.5L42 22" />
+        </svg>
+        <h3>Submitted</h3>
+        <p>Thank you. If you flagged something urgent, someone will follow up as soon as they can.</p>
+        <button class="again" id="againBtn">Submit another</button>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    [School Name] Student Wellbeing Portal &middot; Submissions are not linked to your identity
+  </footer>
 
   <script>
-    // Paste the URL you got from Deploy -> New deployment in Apps Script
-    // (it ends in /exec) between the quotes below.
-    const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyk02qI-4II5ETBOBQAm7WDnFcLUw2B29Sf7q9WYcFagFw2fEfSNlMgrCfwc8cF26xVAQ/exec";
+    // --- custom dropdown ---
+    const combo = document.getElementById("categoryCombo");
+    const trigger = document.getElementById("categoryTrigger");
+    const triggerText = document.getElementById("categoryTriggerText");
+    const panel = document.getElementById("categoryPanel");
+    const hiddenSelect = document.getElementById("category");
+    const options = Array.from(panel.querySelectorAll(".combo-option"));
 
+    function openCombo() {
+      combo.classList.add("open");
+      trigger.setAttribute("aria-expanded", "true");
+    }
+    function closeCombo() {
+      combo.classList.remove("open");
+      trigger.setAttribute("aria-expanded", "false");
+    }
+    function selectOption(opt) {
+      options.forEach((o) => {
+        o.classList.remove("selected");
+        o.setAttribute("aria-selected", "false");
+      });
+      opt.classList.add("selected");
+      opt.setAttribute("aria-selected", "true");
+      triggerText.textContent = opt.querySelector("span").textContent;
+      hiddenSelect.value = opt.dataset.value;
+      closeCombo();
+      trigger.focus();
+    }
+
+    trigger.addEventListener("click", () => {
+      combo.classList.contains("open") ? closeCombo() : openCombo();
+    });
+
+    options.forEach((opt) => {
+      opt.addEventListener("click", () => selectOption(opt));
+      opt.addEventListener("mouseenter", () => {
+        options.forEach((o) => o.classList.remove("active"));
+      });
+    });
+
+    document.addEventListener("click", (e) => {
+      if (!combo.contains(e.target)) closeCombo();
+    });
+
+    trigger.addEventListener("keydown", (e) => {
+      const activeIndex = options.findIndex((o) => o.classList.contains("active"));
+      const isOpen = combo.classList.contains("open");
+
+      if ((e.key === "Enter" || e.key === " ") && isOpen && activeIndex >= 0) {
+        e.preventDefault();
+        selectOption(options[activeIndex]);
+      } else if (e.key === "Enter" || e.key === " " || e.key === "ArrowDown") {
+        e.preventDefault();
+        if (!isOpen) {
+          openCombo();
+          const selectedOpt = options.find((o) => o.classList.contains("selected"));
+          (selectedOpt || options[0]).classList.add("active");
+        } else {
+          const next = options[Math.min(activeIndex + 1, options.length - 1)];
+          options.forEach((o) => o.classList.remove("active"));
+          next.classList.add("active");
+        }
+      } else if (e.key === "ArrowUp") {
+        e.preventDefault();
+        const prev = options[Math.max(activeIndex - 1, 0)];
+        options.forEach((o) => o.classList.remove("active"));
+        prev.classList.add("active");
+      } else if (e.key === "Escape") {
+        closeCombo();
+      } else if (e.key === "Tab") {
+        closeCombo();
+      }
+    });
+
+    const APPS_SCRIPT_URL = "PASTE_YOUR_DEPLOYED_WEB_APP_URL_HERE";
     const form = document.getElementById("concernForm");
-    const statusEl = document.getElementById("status");
+    const formView = document.getElementById("formView");
+    const successView = document.getElementById("successView");
     const submitBtn = document.getElementById("submitBtn");
+    const errText = document.getElementById("errText");
+    const againBtn = document.getElementById("againBtn");
 
     form.addEventListener("submit", async (event) => {
       event.preventDefault();
-
       const category = document.getElementById("category").value;
       const message = document.getElementById("message").value.trim();
-
       if (!message) return;
 
       submitBtn.disabled = true;
-      statusEl.textContent = "Submitting...";
-      statusEl.className = "status";
+      submitBtn.textContent = "Submitting...";
+      errText.textContent = "";
 
       try {
-        // Apps Script Web Apps don't send normal CORS headers back, so the
-        // response usually can't be read from the browser. We send the
-        // request and just assume success if fetch itself didn't throw —
-        // that's fine here since we're not displaying any returned data.
         await fetch(APPS_SCRIPT_URL, {
           method: "POST",
           body: new URLSearchParams({ category, message }),
         });
-
         form.reset();
-        statusEl.textContent = "Thank you. Your concern has been submitted.";
-        statusEl.className = "status ok";
+        formView.style.display = "none";
+        successView.classList.add("show");
       } catch (err) {
-        statusEl.textContent =
-          "Something went wrong. Please try again in a moment.";
-        statusEl.className = "status err";
+        errText.textContent = "Something went wrong. Please try again in a moment.";
       } finally {
         submitBtn.disabled = false;
+        submitBtn.textContent = "Submit";
       }
+    });
+
+    againBtn.addEventListener("click", () => {
+      successView.classList.remove("show");
+      formView.style.display = "block";
     });
   </script>
 </body>
